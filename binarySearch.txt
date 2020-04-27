@@ -1,0 +1,27 @@
+public static void main(String args[])
+    {
+        int[] arr = {12, 15, 22, 46, 61, 84, 90};
+        int key = 46;
+        
+        binarySearch(arr, key);
+    }
+    
+    public static void binarySearch(int[] arr, int key){
+        int left = 0;
+        int right = arr.length-1;
+        int mid;
+        
+        while(right>=left){
+            mid = (left + right) / 2;
+            
+            if(key == arr[mid]){
+                System.out.println(key+"는 "+mid+"번째 INDEX에 위치합니다");
+                break;
+            }
+            if(key < arr[mid]){
+                right = mid - 1;
+            } else{
+                left = mid + 1;
+            }
+        }
+    }
