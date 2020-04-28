@@ -1,0 +1,47 @@
+    // lowerBound : key 보다 크거나 같은 첫번째 위치를 반환
+    public static int lowerBound(int key){
+        int start = 0;
+        int end = n;
+        
+        while(end > start){
+            int mid = (start+end)/2;
+            if(arr[mid] < key){
+                start = mid + 1;
+            } else{
+                end = mid;
+            }
+        }
+        return end;
+    }
+
+UpperBound와 달리 key보다 크거나 같은 첫번째 위치를 찾는 것이기 때문에,
+if(arr[mid] < key) start = mid + 1; 이 된다.
+즉, 키 값을 찾았을 때도 포함해서 start를 변경하는 것이 아닌, 키 값보다 작을 때만 start를 변경한다.
+    
+    // upperBound : key 보다 큰 첫번째 위치를 반환
+    public static int upperBound(int key){
+        int start = 0;
+        int end = n;
+        
+        while(end > start){
+            int mid = (start+end)/2;
+            ifarr[mid] <= key){
+                start = mid + 1;
+            } else{
+                end = mid;
+            }
+        }
+        return end;
+    }
+
+    /*
+소스를 살펴보면 이진탐색 코드와 매우 유사하다는 것을 알 수 있다.
+그러나 key보다 큰 첫번째 위치를 찾는 것이기 때문에,
+if(arr[mid] <= key) start = mid + 1; 을 해야 한다.
+즉, key값을 찾았어도 start값을 증가시킨다는 의미이다.
+
+또 한가지 포인트는 end = mid 부분이다.
+원래 이진탐색에선 end = mid - 1로 mid를 포함하지 않는 방식으로 범위를 조정하였으나,
+Upper, LowerBound에선 mid를 포함하여 변경한다.
+따라서 최종 연산 후에는 언제나 결과값이 en에 위치하게 되고, 이를 반영하여 return end;를 하는 것이다.
+    */
