@@ -1,0 +1,167 @@
+// 인접행렬과 인접리스트
+인접행렬과 인접리스트는 정점과 간선이라고 생각하면 됨
+인접행렬은 정점(v)이 n개일 때 n*n 이차원 배열로 나타낼 수 있음
+
+int[][] a = new int[n+1][n+1];
+
+for(int i=0; i<m; i++){
+     int v1 = sc.nextInt();
+     int v2 = sc.nextInt();
+
+     a[v1][v2] = 1;
+     a[v2][v1] = 1;
+}
+
+인접리스트는 이차원 배열의 행과 열을 통해 정점간의 간선을 표현한거와는 다름
+정점 n에 연결되어 있는 간선들을 A[n]에 저장함
+
+ArrayList<Integer>[] a = (ArrayList<Integer>[]) new ArrayList[n+1];
+
+for(int i=0; i<m; i++){
+     int v1 = sc.nextInt();
+     int v2 = sc.nextInt();
+
+     a[v1].add(v2);
+     a[v2].add(v1);
+}
+
+for(int i=1; i<=n; i++){
+     Collections.sort(a[i]);
+}
+
+같은 목적이지만 배열과 리스트를 통해 다르게 저장함으로써 큰 차이가 있음
+인접행렬은 크기가 정점과 간선의 개수와 상관없이 정점개수*정점개수 이기 때문에
+공간복잡도가 O(v^2)임
+인접리스트는 필요한 공간만 쓰기때문에 O(V+E)임
+
+// DFS는 스택을 사용하고 BFS는 큐를 사용한다
+
+// 인접행렬
+// DFS 깊이우선탐색(재귀)
+
+public static void dfs(int[][] a, boolean[] c, int v){
+     int n = a.length - 1;
+
+     c[v] = true;
+     System.out.pirntf(v+" ");
+
+     for(int i=1; i<=n; i++){
+          if(a[v][i] == 1 && !c[i]{
+               dfs(a, c , i);
+          }
+     }
+}
+
+// DFS 깊이우선탐색(스택)
+
+public static void dfs(int[][] a, boolean[] c, int v, boolean flag){
+          Stack<Integer> s = new Stack<>();
+          int n = a.length - 1;
+
+          s.push(v);
+          c[v] = true;
+          System.out.printf(v+" ");
+
+          while(!s.isEmpty()){
+               int vv = s.peek();
+               flag = false;
+               
+               for(int i=1; i<=n; i++){
+                    if(a[vv][i] == 1 && !c[i]){
+                         s.push(i);
+                         System.out.printf(i+" ");
+
+                         c[i] = true;
+                         flag = true;
+                         break;
+                    }
+               }
+               if(!flag){
+                    s.pop();
+               }
+          }
+}
+
+1. 스택의 top에 있는 정점을 기준으로 간선이 연결되어 있고 아직 방문하지 않은 정점을 찾는다
+2. 조건에 맞는 정점을 찾는다면 해당 정점을 스택에 넣은 후 break를 한다
+3. 연결된 간선이 없고 방문하지 않은 정점을 찾지 못한다면 pop을 한다
+
+
+2번에서 break를 걸어줌으로써 바로 DFS가 진행됨
+현재 정점을 기준으로 탐색 중 조건에 맞는 정점을 찾는다면 그 정점을 기준으로 다시 탐색함
+이를 반복함으로써 깊이 우선 탐색(DFS)를 할 수 있게 됨
+3번은 깊이 우선 탐색에서 더 밑으로 내려갈 정점이 없기 때문에 더 이상 탐색할 수 없고
+이런 경우 다시 돌아가기 위해 pop을 하는 것임
+
+// BFS (넓이우선탐색)
+
+public static void bfs(int[][] a, boolean[] c, int v){
+          Queue<Integer> q = new LinkedList<>();
+          int n = a.length - 1;
+
+          q.add(v);
+          c[v] = true;
+
+          while(!q.isEmpty()){
+               v = q.poll();
+               System.out.printf(v+" ");
+
+               for(int i=1; i<=n; i++){
+                    if(a[v][i] == 1 && !c[i]){
+                         q.add(i);
+                         c[i] = true;
+                    }
+                }
+          }
+}
+
+BFS의 경우
+1. 큐의 front인 정점을 기준으로 연결된 간선이 있고 방문하지 않은 정점을 찾는다
+2. 조건에 맞는 정점은 모두 큐에 넣음
+
+위 과정을 반복한다
+DFS(깊이우선탐색)의 경우 break를 걸어줬다
+하지만 BFS(넓이우선탐색)은 모두 큐에 넣음으로써 이름처럼 넓이를 기준으로 탐색함
+따라서 모든 경우를 탐색하는 것이고 최단 경로에 이용된다
+
+
+//인접리스트
+
+// DFS(깊이우선탐색)
+
+public static void dfs(ArrayList<Integer>[] a, boolean[] c, int v){
+         if(c[v]){
+              return;
+         }
+
+         c[v] = true;
+         System.out.printf(v+" ");
+
+         for(int vv : a[v]){
+              if(!c[vv]){
+                    dfs(a, c, vv);
+              }
+         }
+}
+
+
+// BFS(넓이우선탐색)
+
+public static void bfs(ArrayList<Integer>[] a, boolean[] c, int v){
+          Queue<Integer> q = new LinkedList<>();
+
+          q.add(v);
+          c[v] = true;
+
+          while(!q.isEmpty()){
+               v = q.poll();
+               System.out.printf(v+" ");
+
+               for(int vv : a[v]){
+                     if(!c[vv]){
+                         q.add(vv);
+                         c[vv] = true;
+                     }
+               }
+           }
+}
