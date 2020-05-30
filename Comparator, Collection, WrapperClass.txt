@@ -1,0 +1,17 @@
+Comparator 
+
+byte, char, int, double... 과 같은 PrimitiveType에는 적용 불가
+Wrapper Class 를 이용해야한다 대개 String 비교할 때 쓰는 듯
+
+// --
+
+List 에서 가장 작은 값 찾기
+Collections.min(list);
+
+List 에서 인덱스 찾기
+list.indexOf(value);
+
+//Wrapper 클래스 활용
+
+Character.isDigit(char c) -> boolean
+Character.getNumericValue(char c) -> 문자를 숫자로 변환
