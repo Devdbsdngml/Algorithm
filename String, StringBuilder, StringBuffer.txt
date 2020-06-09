@@ -1,0 +1,36 @@
+StringBuffer 클래스는 멀티 스레드 환경에서 사용할 수 있도록
+동기화가 되어 있어 스레드에 안전함
+
+반면
+
+StringBuilder 클래스는 단일 스레드 환경에서만 사용하도록
+설계되어 있음
+
+// String 클래스와 StringBuilder/StringBuffer 공통 메소드 종류
+
+char charAt(int index) : 특정 위치에 있는 문자 반환
+int length() : 문자열의 길이
+String substring(int start, int end) : 문자열의 일부를 뽑아냄
+String toString() : 객체를 문자열로 나타낸 값
+String concat(String str) : 문자열을 합침
+
+//String 메소드 종류
+
+String replace(char old, char new) : 특정 문자를 모두새로운 문자로 치환
+String substring(int begin , int end) : String 일부를 뽑아냄
+char[] toCharArray() : char 배열로 변환
+String toLowerCase() : 모두 소문자로 변환
+String toUpperCase() : 모두 대문자로 변환
+String trim() : 끝에 붙어있는 공백문자 제거
+String valueOf(char []) : char배열로부터 문자열을 만들어냄
+String valueOf(int i) : 원시 값으로부터 문자열을 만들어냄
+
+//StringBuilder/StringBuffer 메소드 종류
+
+sb.appned(...) : 문자열 끝에 주어진 매개값을 추가
+sb.insert(int offset, ...) : 문자열 중간에 주어진 매개값을 추가
+sb.delete(int start, int end) : 문자열의 일부분을 삭제
+sb.deleteCharAt(int index) : 문자열에서 주어진 index의 문자를 삭제
+sb.replace(int start, int end, String str) : 문자열의 일부분을 다른 문자열로 대치
+sb.reverse() : 문자열의 순서를 뒤바꿈
+sb.setCharAt(int index, char ch) : 문자열에서 주어진 index의 문자를 다른 문자로 대치
