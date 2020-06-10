@@ -15,3 +15,8 @@ list.indexOf(value);
 
 Character.isDigit(char c) -> boolean
 Character.getNumericValue(char c) -> 문자를 숫자로 변환
+
+// String format 
+
+String의 자릿수를 맞추는 경우, String.format("%자릿수s", str)를 이용
+숫자의 자릿수를 맞추는 경우, String.format("%자릿수d",num)을 이용하면 된다.
