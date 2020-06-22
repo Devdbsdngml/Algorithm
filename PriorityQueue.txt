@@ -1,0 +1,37 @@
+class Rextester
+{
+    static class A implements Comparable<A>{
+        int idx;
+        int val;
+        
+        A(int idx, int val){
+            this.idx = idx;
+            this.val = val;
+        }
+        @Override
+        public int compareTo(A target){
+            return this.val <= target.val ? 1 : -1;
+        }
+    }
+    
+    public static void main(String args[])
+    {
+        PriorityQueue<A> que = new PriorityQueue<>();
+        //PriorityQueue<Integer> que = new PriorityQueue<>(Collections.reverseOrder());
+        que.offer(new A(1, 2));
+        que.offer(new A(2, 1));
+        que.offer(new A(3, 3));
+        que.offer(new A(4, 2));
+        
+        while(!que.isEmpty()){
+            A a = que.poll();
+            System.out.println(a.idx+" "+a.val);
+        }
+    }
+}
+
+3 3
+1 2
+4 2
+2 1
+// 우선순위를 찾되 같은 값이면 먼저 offer한 것이 먼저 들어옴(당연한건가?)
