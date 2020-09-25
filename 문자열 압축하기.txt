@@ -1,33 +1,42 @@
-import java.util.*;
+// 문자 1개의 단위로만 문자열을 압축
+// a4b2c3d1
 
-class Solution {
-    public int solution(String s) {
-        int answer = s.length();
-        int compressAns = compress(s);
-        return Math.min(answer, compressAns);
+import java.util.*;
+import java.lang.*;
+
+class Rextester
+{  
+    public static void main(String args[])
+    {
+        System.out.println(compressString("aaaabbcccd"));
     }
     
-    int compress(String str){
+    private static String compressString(String str){
+        String comStr = compress(str);
+        return str.length() < comStr.length() ? str : comStr;
+    }
+    
+    private static String compress(String str){
         int cnt = 0;
         StringBuilder sb = new StringBuilder(getTotal(str));
-        
         for(int i=0; i<str.length(); i++){
             cnt++;
             if(i+1 >= str.length() || str.charAt(i) != str.charAt(i+1)){
-                sb.append(cnt);
                 sb.append(str.charAt(i));
+                sb.append(cnt);
                 cnt = 0;
             }
         }
-        return sb.toString().length();
+        return sb.toString();
     }
     
-    int getTotal(String str){
+    private static int getTotal(String str){
         int cnt = 0;
         int tot = 0;
         for(int i=0; i<str.length(); i++){
             cnt++;
             if(i+1 >= str.length() || str.charAt(i) != str.charAt(i+1)){
+                // 문자길이 1이랑 cnt의 길이
                 tot += 1 + String.valueOf(cnt).length();
                 cnt = 0;
             }
@@ -35,3 +44,4 @@ class Solution {
         return tot;
     }
 }
+
