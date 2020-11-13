@@ -1,0 +1,56 @@
+크루스칼 알고리즘은 가장 적은 비용으로 모든 노드를 연결할 때 사용(최소 비용 신장 트리)
+특징 : 간선 숫자 = 노드 숫자 - 1
+
+핵심 : 간선을 거리가 짧은 순서대로 그래프에 포함 -> 간선 정보를 오름차순으로 정렬
+        주의할 점은, 사이클이 발생하면 안 됨
+
+1. 정렬된 순서에 맞게 그래프에 포함시킴
+2. 포함시키기 전에 사이클 테이블을 확인
+3. 사이클을 형성하는 경우 간선을 포함하지 않음
+
+사이클이 발생하는 지의 여부는 Union-Find 알고리즘 적용하면 됨
+연결이 된 이후엔 Union, 사이클 발생 확인은 Find
+
+
+// 간선 클래스 선언
+public static class Edge implements Comparable{
+        int from;
+        int to;
+        int cost;
+        Edge(int from, int to, int cost){
+            this.from = from;
+            this.to = to;
+            this.cost = cost;
+        }
+        
+        @Override
+        public int compareTo(Edge obj){
+            return this.cost - obj.cost;
+        }
+    }
+
+
+public int solution(int n, int[][] costs) {
+        int answer = 0;
+        PriorityQueue<Edge> que = new PriorityQueue<>();
+        int[] parent = new int[n];
+        
+        for(int i=0; i<costs.length; i++){
+            que.add(new Edge(costs[i][0], costs[i][1], costs[i][2]));
+        }
+        
+        for(int i=0; i<n; i++){
+            parent[i] = i;
+        }
+        
+        while(!que.isEmpty()){
+            Edge edge = que.poll();
+            
+            if(!findParent(parent, edge.from, edge.to)){
+                unionParent(parent, edge.from, edge.to);
+                answer += edge.cost;
+            }
+        }
+        
+        return answer;
+    }
