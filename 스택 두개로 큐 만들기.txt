@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class Main
+{
+    public static class MyQueue<T>{
+        private Stack<T> stack1;
+        private Stack<T> stack2;
+        
+        public MyQueue(){
+            stack1 = new Stack<T>();
+            stack2 = new Stack<T>();
+        }
+        
+        public void offer(T element){
+            while(!stack2.isEmpty()){
+                stack1.push(stack2.pop());
+            }
+            stack1.push(element);
+            
+            while(!stack1.isEmpty()){
+                stack2.push(stack1.pop());
+            }
+        }
+        
+        public T poll(){
+            return stack2.pop();
+        }
+        
+        public int size(){
+            return stack2.size();
+        }
+    }
+	public static void main(String[] args) {
+	    MyQueue<Integer> que = new MyQueue<>();
+	    que.offer(1);
+	    que.offer(2);
+	    
+	    System.out.println(que.size());
+	    System.out.println(que.poll());
+	    System.out.println(que.poll());
+	    System.out.println(que.size());
+	}
+}
