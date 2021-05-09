@@ -1,0 +1,95 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.StringTokenizer;
+
+public class Main{
+    static class Coin implements Comparable<Coin>{
+        String price;
+        String code;
+        String date;
+
+        public Coin(String price, String code, String date) {
+            this.price = price;
+            this.code = code;
+            this.date = date;
+        }
+
+        public Coin(String price, String date) {
+            this.price = price;
+            this.date = date;
+        }
+
+        @Override
+        public int compareTo(Coin o) {
+            return Integer.compare(Integer.parseInt(this.date), Integer.parseInt(o.date));
+        }
+    }
+    private static BufferedReader br;
+    private static BufferedWriter bw;
+
+    static ArrayList<Coin> list;
+    static ArrayList<Coin> ansList;
+
+    public static void main(String[] args) throws IOException {
+        br = new BufferedReader(new InputStreamReader(System.in));
+        bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        String code = "012345";
+        String date = "20200614";
+        String[] data = {"price=80 code=234512 date=2020082514",
+                "price=90 code=012345 date=2020061413",
+                "price=150 code=012345 date=2020061511",
+                "price=110 code=012345 date=2020061409",
+                "price=70 code=234512 date=2020091213"};
+
+        int[] res = solution(code, date, data);
+
+        for(int i : res){
+            bw.write(i+" ");
+        }
+
+        bw.flush();
+        br.close();
+        bw.close();
+    }
+
+    private static int[] solution(String code, String date, String[] data) {
+        int[] answer = {};
+        list = new ArrayList<>();
+        ansList = new ArrayList<>();
+
+        for(int i=0; i<data.length; i++){
+            String[] token = data[i].split(" ");
+            StringBuilder sb = new StringBuilder();
+            // 한줄씩
+            for(int j=0; j<token.length; j++){
+                for(char c : token[j].toCharArray()){
+                    if(Character.isDigit(c)){
+                        sb.append(c);
+                    }
+                }
+                sb.append(" ");
+            }
+            String[] coin = sb.toString().split(" ");
+            list.add(new Coin(coin[0], coin[1], coin[2]));
+        }
+
+        for(int i=0; i<list.size(); i++){
+            Coin coin = list.get(i);
+            String findDate = coin.date.substring(0, 8);
+            if(coin.code.equals(code) && findDate.equals(date)){
+                ansList.add(new Coin(coin.price, coin.date));
+            }
+        }
+        Collections.sort(ansList);
+        answer = new int[ansList.size()];
+
+        for(int i=0; i<ansList.size(); i++){
+            answer[i] = Integer.parseInt(ansList.get(i).price);
+        }
+
+        return answer;
+    }
+}
